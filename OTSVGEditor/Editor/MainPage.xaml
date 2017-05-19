@@ -1,0 +1,136 @@
+﻿<!--
+Copyright (c) Microsoft Corporation. All rights reserved.
+
+Licensed under the MIT License. See LICENSE in the project root for license information.
+-->
+<Page
+    x:Class="Editor.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Editor"
+    xmlns:parser="using:OTParser"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" MinWidth="800">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="400" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            
+            <!--SVG folder selection-->
+            <StackPanel Grid.Row="0" Orientation="Horizontal" Background="Lavender">
+                <Button x:Name="PickSVGFolderButton">
+                    Select SVG folder...
+                </Button>
+                <Border Width="225" Style="{StaticResource TextOutlineBorder}">
+                    <TextBlock x:Name="SvgFolderStatusTextBlock" Style="{StaticResource StatusTextBlock}">
+                        None selected
+                    </TextBlock>
+                </Border>
+            </StackPanel>
+
+            <Grid Grid.Row="1" Background="Lavender" BorderThickness="0,0,1,0" BorderBrush="LightGray">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!--List of SVG files-->
+                <ListView Grid.Row="0" x:Name="SVGlistView" ItemsSource="{x:Bind svgFiles}" IsItemClickEnabled="True" ItemClick="SVGlistView_ItemClick" CanDragItems="True" DragItemsStarting="SVGlistView_DragItemsStarting">
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:DataType="local:SvgFileItem">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="{x:Bind Thumbnail}" Height="50" Width="50"/>
+                                <TextBlock Text="{x:Bind FileName}" VerticalAlignment="Center" Padding="5"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+
+                <!--Hint text: SVG list-->
+                <TextBlock Grid.Row="0" x:Name="SvgListHint" HorizontalAlignment="Center" VerticalAlignment="Center" Width="300" TextAlignment="Center" TextWrapping="WrapWholeWords">
+                    Select a folder that contains SVG assets to preview them here and make them available to embed.
+                </TextBlock>
+
+                <!--SVG preview WebView-->
+                <Border Grid.Row="1" x:Name="SvgPreviewWrapper" Visibility="Collapsed" Background="White" Height="250" BorderBrush="LightGray" BorderThickness="0,1,0,0">
+                    <WebView Grid.Row="1" x:Name="SVGPreview" CanDrag="True"/>
+                </Border>
+
+                <!--Hint text: SVG preview WebView-->
+                <Border Grid.Row="1" x:Name="SvgPreviewHintWrapper" Visibility="Collapsed" Background="White" Height="250" BorderBrush="LightGray" BorderThickness="0,1,0,0">
+                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Width="300" TextAlignment="Center" TextWrapping="WrapWholeWords">
+                        Drag and drop an asset from the list above onto a target glyph to embed it. Select an asset to preview it here.
+                    </TextBlock>
+                </Border>
+            </Grid>
+        </Grid>
+        
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            
+            <RelativePanel Grid.Row="0" Background="Lavender" BorderBrush="LightGray" BorderThickness="0,0,0,1">
+                <!--Font file selection-->
+                <StackPanel RelativePanel.AlignLeftWithPanel="True" Orientation="Horizontal">
+                    <Button x:Name="PickAFileButton">
+                        Select font file...
+                    </Button>
+                    <Border Width="300" Style="{StaticResource TextOutlineBorder}">
+                        <TextBlock x:Name="FontName" Style="{StaticResource StatusTextBlock}">
+                            None selected
+                        </TextBlock>
+                    </Border>
+                </StackPanel>
+                <StackPanel RelativePanel.AlignRightWithPanel="True" Orientation="Horizontal" HorizontalAlignment="Right">
+                    <!--Export all button-->
+                    <Button x:Name="ExportSVGButton" Click="ExportAllSvgButtonClick" Visibility="Collapsed">
+                        Export all SVG...
+                    </Button>
+                    
+                    <!--Save button-->
+                    <Button x:Name="SaveFileButton" Visibility="Collapsed">
+                        Save font as...
+                    </Button>
+                </StackPanel>
+            </RelativePanel>
+            
+            <!--Glyph grid-->
+            <GridView Grid.Row="1" x:Name="GlyphGridView" Padding="25 25 25 25" ItemsSource="{x:Bind fontFile.AllGlyphs}" Margin="-9,0,0,0" Grid.RowSpan="2" >
+                <GridView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <ItemsWrapGrid x:Name="AllItemsWrapGrid" HorizontalAlignment="Center" Orientation="Horizontal"/>
+                    </ItemsPanelTemplate>
+                </GridView.ItemsPanel>
+                <GridView.ItemTemplate>
+                    <DataTemplate x:DataType="parser:GlyphModel">
+                        <StackPanel AllowDrop="True" Width="100" Orientation="Vertical" DragOver="GridView_DragOver" Drop ="GridView_Drop" Margin="8" RightTapped="Glyph_RightTapped" >
+                            <TextBlock TextAlignment="Center" Text="{x:Bind Definition}" FontSize="48" FontFamily="{x:Bind FontFamily}"/>
+                            <Border Style="{StaticResource PurpleBorder}" >
+                                <StackPanel Orientation="Vertical">
+                                    <TextBlock Text="{x:Bind Definition}" FontFamily="SegoeUI" FontWeight="Bold" FontSize="20" VerticalAlignment="Top" HorizontalAlignment="Center"/>
+                                    <TextBlock Text="{x:Bind CodePointHexString}" FontFamily="SegoeUI" FontSize="14" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                    </DataTemplate>
+                </GridView.ItemTemplate>
+            </GridView>
+
+            <!--Hint text: glyph grid-->
+            <TextBlock Grid.Row="1" x:Name="GlyphGridHint" HorizontalAlignment="Center" VerticalAlignment="Center" Width="300" TextAlignment="Center" TextWrapping="WrapWholeWords">
+                Select a font file to show its glyphs here and make them available as embedding targets.
+            </TextBlock>
+        </Grid>
+    </Grid>
+</Page>
