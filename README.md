@@ -12,6 +12,11 @@ This project was originally developed by Microsoft interns Alice Wen, Anya
 Hargil, and Julia Weaver. While we hope you find the tool useful, Microsoft
 makes no guarantees about the quality of the app or the fonts it generates.
 
+## Acquiring the app
+
+You can download a recent build of the app [from the Windows Store](https://www.microsoft.com/store/apps/9nj7k9jx60p1)
+or build the app yourself using the instructions below.
+
 ## Building the app
 
 Compiling this project requires [Visual Studio 2015](https://www.visualstudio.com/vs)
@@ -90,5 +95,5 @@ This project is licensed under the MIT License.
 
 This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct).
 For more information, see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/)
-or contact [opencode@microsoft.com](opencode@microsoft.com) with any
+or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any
 additional questions or comments.
