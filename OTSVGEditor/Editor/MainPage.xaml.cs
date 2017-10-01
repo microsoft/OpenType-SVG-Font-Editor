@@ -375,21 +375,11 @@ namespace Editor
                 Debug.Assert(e.ClickedItem is SvgFileItem);
                 SvgFileItem selectedItem = e.ClickedItem as SvgFileItem;
 
-                // Plug in the name of the SVG file to render.
-                string placeHolderHTML = System.IO.File.ReadAllText("HTML.html");
-                string totalHTML = placeHolderHTML.Replace("PlaceHolder", selectedItem.FileName);
+                // Set the source of the preview Image to the SVG file.
+                SVGPreviewImage.Source = new SvgImageSource(new Uri("ms-appdata:///temp/preview/" + selectedItem.FileName));
 
                 selectedSvgItems.Clear();
                 selectedSvgItems.Add(selectedItem);
-
-                // Write prepared HTML to temp  preview folder.
-                StorageFile htmlFile = await svgPreviewTempFolder.CreateFileAsync("Preview.html", CreationCollisionOption.ReplaceExisting);
-                await FileIO.WriteTextAsync(htmlFile, totalHTML);
-                await htmlFile.CopyAsync(svgPreviewTempFolder, "SVGPreview.html", NameCollisionOption.ReplaceExisting);
-
-                // Navigate WebView to preview HTML page.
-                Uri source = new Uri("ms-appdata:///temp/preview/SVGPreview.html");
-                SVGPreview.Navigate(source);
             }
             catch (Exception exc)
             {

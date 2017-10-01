@@ -19,8 +19,8 @@ or build the app yourself using the instructions below.
 
 ## Building the app
 
-Compiling this project requires [Visual Studio 2015](https://www.visualstudio.com/vs)
-or later and Windows 10 SDK version 10.0.14393.0 or later.
+Compiling this project requires [Visual Studio 2017](https://www.visualstudio.com/vs)
+or later and Windows 10 SDK version 10.0.15063.0 or later.
 
 1. Download or clone the project repository.
 2. Launch OTSVGEditor.sln.
@@ -28,7 +28,7 @@ or later and Windows 10 SDK version 10.0.14393.0 or later.
 
 ## Using the app
 
-Running this app requires Windows 10 Anniversary Update or later.
+Running this app requires Windows 10 Creators Update or later.
 
 The primary purpose of this app is to embed Scalable Vector Graphics (SVG)
 assets over existing monochrome glyphs in a font using a straightforward 

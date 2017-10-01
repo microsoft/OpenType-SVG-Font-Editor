@@ -62,7 +62,7 @@ Licensed under the MIT License. See LICENSE in the project root for license info
 
                 <!--SVG preview WebView-->
                 <Border Grid.Row="1" x:Name="SvgPreviewWrapper" Visibility="Collapsed" Background="White" Height="250" BorderBrush="LightGray" BorderThickness="0,1,0,0">
-                    <WebView Grid.Row="1" x:Name="SVGPreview" CanDrag="True"/>
+                    <Image Grid.Row="1" x:Name="SVGPreviewImage" CanDrag="True"/>
                 </Border>
 
                 <!--Hint text: SVG preview WebView-->
