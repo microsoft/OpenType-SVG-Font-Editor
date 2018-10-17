@@ -5,7 +5,7 @@ embedding SVG glyphs in an [OpenType](https://www.microsoft.com/en-us/Typography
 font. It was designed to simplify the process of creating SVG-based icon fonts,
 with web and app designers in mind. It can be considered a simpler, GUI-based
 version of the [`addSVGtable`](https://github.com/adobe-type-tools/opentype-svg)
-tool by Miguel Sousa of Adobe. Both of these tools use OpenType's ['svg ' table](https://www.microsoft.com/typography/otspec/svg.htm)
+tool by Miguel Sousa of Adobe. Both of these tools use OpenType's [SVG Table](https://www.microsoft.com/typography/otspec/svg.htm)
 to include SVG content in the font file.
 
 This project was originally developed by Microsoft interns Alice Wen, Anya
@@ -37,7 +37,7 @@ appropriate SVG-related OpenType tables in the font file and making appropriate
 adjustments to the SVG content as required by the OpenType spec.
 
 The app can also remove SVG glyphs from a font, as well as copy all the SVG
-assets out of a font and into standalone .SVG files on disk.
+assets out of a font and into standalone .svg files on disk.
 
 ### Adding SVG glyphs to a font
 
@@ -74,7 +74,7 @@ assets out of a font and into standalone .SVG files on disk.
    to extract.
 3. Click "Export all SVGs..." and select a destination folder.
 4. The app will scan the font file for SVG glyphs and save them as individual
-   .SVG files to the specified folder.
+   .svg files to the specified folder.
 
 ## Limitations and known issues
 
